@@ -7,9 +7,9 @@ import (
 
 //User
 type User struct {
-	Id   int64
-	Name string `xorm:"unique"`
-	Type string
+	Id   int64  `json:"id"`
+	Name string `xorm:"unique" json:"name"`
+	Type string `json:"type"`
 }
 
 func init() {

@@ -7,11 +7,11 @@ import (
 
 //Relationship
 type Relationship struct {
-	Id       int64
-	Owner_id int64
-	User_id  int64
-	State    string
-	Type     string
+	Id       int64  `json:"id"`
+	Owner_id int64  `json:"-"`
+	User_id  int64  `json:"user_id"`
+	State    string `json:"state"`
+	Type     string `json:"type"`
 }
 
 func init() {
