@@ -1,12 +1,15 @@
 # GoApiDemo
 This is a golang restful api demo using **mux&amp;xorm**.
 
-## Install Dependencied
+## Install dependencies
 ```
 go get github.com/gorilla/mux
 go get github.com/go-xorm/xorm
 go get github.com/mattn/go-sqlite3
 ```
+
+Or using **godep**:
+`godep go install`
 
 ## Run
 `go run *.go`

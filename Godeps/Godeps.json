@@ -1,0 +1,31 @@
+{
+	"ImportPath": "GoApiDemo",
+	"GoVersion": "go1.4",
+	"GodepVersion": "v60",
+	"Deps": [
+		{
+			"ImportPath": "github.com/go-xorm/core",
+			"Comment": "v0.5.2-1-gb9277f8",
+			"Rev": "b9277f807c011387baed9748a45f26da65b42077"
+		},
+		{
+			"ImportPath": "github.com/go-xorm/xorm",
+			"Comment": "v0.5.2-2-g2f8952d",
+			"Rev": "2f8952d39b3fde5a64ec5b43052b13ed49dca45a"
+		},
+		{
+			"ImportPath": "github.com/gorilla/context",
+			"Rev": "1ea25387ff6f684839d82767c1733ff4d4d15d0a"
+		},
+		{
+			"ImportPath": "github.com/gorilla/mux",
+			"Comment": "v1.1",
+			"Rev": "0eeaf8392f5b04950925b8a69fe70f110fa7cbfc"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-sqlite3",
+			"Comment": "v1.1.0-51-g37aa7c6",
+			"Rev": "37aa7c6f5bc95b7264de70cd1f0ca1d39228ebd6"
+		}
+	]
+}
