@@ -1,8 +1,8 @@
 package models
 
 import (
-	"errors"
-	// "log"
+	// "errors"
+	"log"
 )
 
 //Relationship
@@ -12,6 +12,13 @@ type Relationship struct {
 	User_id  int64
 	State    string
 	Type     string
+}
+
+func init() {
+	// 同步
+	if err := x.Sync(new(Relationship)); err != nil {
+		log.Fatalf("Fail to sync database: %v\n", err)
+	}
 }
 
 func newRelationship(owner_id int64, user_id int64, state string) error {
