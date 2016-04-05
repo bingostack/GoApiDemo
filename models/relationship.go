@@ -22,21 +22,37 @@ func init() {
 	}
 }
 
+// Get Relationship using owner_id and user_id
+func getRelationship(owner_id int64, user_id int64) (Relationship, bool, error) {
+	var relation Relationship
+	relation.Owner_id = owner_id
+	relation.User_id = user_id
+	has, err := x.Get(&relation)
+	return relation, has, err
+}
+
+// Update Relationship using fields
+func updateRelationship(owner_id int64, user_id int64, state string, rtype string) error {
+	_, err := x.Where("owner_id = ?", owner_id).Where("user_id = ?", user_id).
+		Update(&Relationship{
+			Owner_id: owner_id, User_id: user_id,
+			State: state, Type: rtype})
+	return err
+}
+
+// Update or Create Relationship handler
 func NewRelationship(owner_id int64, user_id int64, state string) (
 	Relationship, error) {
 	var relation Relationship
 
 	if state == "liked" {
 		// if both like, then match
-		var vrelation Relationship
-		vrelation.Owner_id = user_id
-		vrelation.User_id = owner_id
-		_, err := x.Get(&vrelation)
+		vrelation, has, err := getRelationship(user_id, owner_id)
 		if err != nil {
 			log.Printf("Fail to get Relationship from database: %v\n", err)
 			return relation, err
 		}
-		if vrelation.State == "liked" {
+		if has && vrelation.State == "liked" {
 			state = "matched"
 			vrelation.State = "matched"
 			fmt.Printf("%v and %v matched!\n", owner_id, user_id)
@@ -48,22 +64,32 @@ func NewRelationship(owner_id int64, user_id int64, state string) (
 			}
 		}
 	}
+	// Check if exists
+	_, has, err := getRelationship(owner_id, user_id)
+	if err != nil {
+		log.Printf("Fail to get Relationship from database: %v\n", err)
+		return relation, err
+	}
 	// Update or Insert
-	_, err := x.Where("owner_id = ?", owner_id).Where("user_id = ?", user_id).
-		Insert(&Relationship{
-			Owner_id: owner_id, User_id: user_id,
-			State: state, Type: "relationship"})
+	if has {
+		err = updateRelationship(owner_id, user_id, state, "relationship")
+	} else {
+		_, err = x.Where("owner_id = ?", owner_id).
+			Where("user_id = ?", user_id).Insert(&Relationship{
+				Owner_id: owner_id, User_id: user_id,
+				State: state, Type: "relationship"})
+	}
 	if err != nil {
 		log.Printf("Fail to create Relationship: %v\n", err)
 		return relation, err
 	}
+
 	// get Relationship just added
-	relation.Owner_id = owner_id
-	relation.User_id = user_id
-	_, err = x.Get(&relation)
+	relation, _, err = getRelationship(owner_id, user_id)
 	return relation, err
 }
 
+// Get Relationship handler
 func GetRelationship(owner_id int64) ([]Relationship, error) {
 	var relations []Relationship = make([]Relationship, 0)
 	err := x.Where("owner_id = ?", owner_id).Find(&relations)
