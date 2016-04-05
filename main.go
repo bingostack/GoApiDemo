@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/gorilla/mux"
-	// "log"
 	"net/http"
+        "fmt"
 )
 
 func main() {
@@ -11,9 +11,10 @@ func main() {
 
 	r.HandleFunc("/", HomeHandler)
 	http.Handle("/", r)
+        fmt.Println("Now listening on http://localhost:8000...")
 	http.ListenAndServe(":8000", r)
 }
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write("Hello World!\n")
+	w.Write([]byte("Hello World!\n"))
 }
