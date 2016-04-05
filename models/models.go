@@ -1,7 +1,6 @@
 package models
 
 import (
-	// "errors"
 	"github.com/go-xorm/xorm"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
@@ -9,6 +8,7 @@ import (
 
 var x *xorm.Engine
 
+// create database engine
 func init() {
 	var err error
 	x, err = xorm.NewEngine("sqlite3", "./goapidemo.db")

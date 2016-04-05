@@ -15,7 +15,7 @@ type Relationship struct {
 }
 
 func init() {
-	// 同步
+	// syncdb
 	if err := x.Sync(new(Relationship)); err != nil {
 		log.Fatalf("Fail to sync database: %v\n", err)
 	}

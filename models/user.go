@@ -13,7 +13,7 @@ type User struct {
 }
 
 func init() {
-	// 同步
+	// syncdb
 	if err := x.Sync(new(User)); err != nil {
 		log.Fatalf("Fail to sync database: %v\n", err)
 	}
@@ -28,6 +28,7 @@ func GetUser() ([]User, error) {
 	var user []User = make([]User, 0)
 	err := x.Find(&user)
 	if err != nil {
+		log.Printf("Fail to get user from database: %v\n", err)
 		return nil, err
 	}
 	return user, nil
