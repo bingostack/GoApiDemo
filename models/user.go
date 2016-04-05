@@ -19,9 +19,17 @@ func init() {
 	}
 }
 
-func NewUser(name string) error {
+func NewUser(name string) (User, error) {
+	var user User
 	_, err := x.Insert(&User{Name: name, Type: "user"})
-	return err
+	if err != nil {
+		log.Printf("Fail to create user: %v\n", err)
+		return user, err
+	}
+	// get User just added
+	user.Name = name
+	_, err = x.Get(&user)
+	return user, err
 }
 
 func GetUser() ([]User, error) {

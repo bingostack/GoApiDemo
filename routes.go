@@ -10,6 +10,7 @@ func NewRouter() *mux.Router {
 	r := mux.NewRouter()
 	r.HandleFunc("/", HomeHandler)
 	r.Methods("GET").Path("/users").HandlerFunc(handlers.UserHandler)
+	r.Methods("POST").Path("/users").HandlerFunc(handlers.AddUserHandler)
 	return r
 }
 
