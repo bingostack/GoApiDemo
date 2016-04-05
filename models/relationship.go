@@ -9,10 +9,10 @@ import (
 //Relationship
 type Relationship struct {
 	Id       int64  `json:"id"`
-	Owner_id int64  `json:"-"`
-	User_id  int64  `json:"user_id"`
-	State    string `json:"state"`
-	Type     string `json:"type"`
+	Owner_id int64  `json:"-" xorm:"not null unique(a)"`
+	User_id  int64  `json:"user_id" xorm:"not null unique(a)"`
+	State    string `json:"state" xorm:"not null"`
+	Type     string `json:"type" xorm:"not null default relationship"`
 }
 
 func init() {
